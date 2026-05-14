@@ -24,6 +24,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+<<<<<<< HEAD
 .banner{
 display: -webkit-box;
 -webkit-box-line-clamp:2;
@@ -31,6 +32,11 @@ display: -webkit-box;
 overflow: hidden;
 background-color: #1fba87;
 color:white;
+=======
+  #root{
+    width: 100%;
+  }
+>>>>>>> d223b19561a6b76e80505198a13c7163ddb690c2
 
 }
   @media (max-width: 1024px) {
