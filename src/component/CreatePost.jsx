@@ -1,7 +1,7 @@
 import { useContext, useRef } from "react";
 import { PostList } from "../store/post-list-store";
 
-export function CreatePost(){
+export function CreatePost({ setselectedTab }){
     const postTitleElement =useRef();
     const userIdElement =useRef();
     const postBodyElement =useRef();
@@ -17,7 +17,12 @@ e.preventDefault();
       const reaction = reactionElement.current.value;
       const tags = tagsElement.current.value.split(" ");
       addPost(userId, postTitle, postBody, reaction, tags);
-
+      userIdElement.current.value="";
+      postTitleElement.current.value="";
+      postBodyElement.current.value="";
+      reactionElement.current.value="";
+      tagsElement.current.value="";
+      setselectedTab("Home");
   }
     return (<form onSubmit={(e) => { handleOnsubmit(e) }}>
         <div class="mb-3">
