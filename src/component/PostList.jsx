@@ -1,20 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { Card } from "./Card";
-import { PostList as PostListData}from "../store/post-list-store";
+import { PostList as PostListData } from "../store/post-list-store";
 import "../App.css";
 import { Welcome } from "./Welcome";
 import { Loading } from "./Loading";
 
-export function PostList(){
-   const { postList, addPosts }= useContext(PostListData);
-   const [fetching,setFetching]=useState(false);
+export function PostList() {
+   const { postList, addPosts } = useContext(PostListData);
+
+   const [fetching, setFetching] = useState(false);
+
    useEffect(() => {
 
-      setFetching(true);
-      const controller=new AbortController();
-      const signal=controller.signal;
+      const controller = new AbortController();
 
-      fetch("https://dummyjson.com/posts",{signal})
+      setFetching(true);
+      const signal = controller.signal;
+
+      fetch("https://dummyjson.com/posts", { signal })
          .then((resp) => resp.json())
          .then((data) => {
             addPosts(data.posts);
@@ -24,22 +27,24 @@ export function PostList(){
          })
          .finally(() => {
             setFetching(false);
-            controller.abort();
          });
 
+      return () => {
+         console.log("clean.....");
+         controller.abort();
+      };
    }, []);
 
+   return (
+      <div className="container-card">
+         {fetching && <Loading />}
 
-    return (
+         {!fetching && postList.length === 0 && <Welcome />}
 
-<div className="container-card">
-          {fetching && <Loading></Loading>}
-          {!fetching && postList.length === 0 && (<Welcome ></Welcome>)}
-  
-          {!fetching && postList.map((postdata)=>{
-           return <Card key={postdata.id} post={postdata}></Card>;
-
-        })}
-    
-        </div>);
+         {!fetching &&
+            postList.map((postdata) => {
+               return <Card key={postdata.id} post={postdata} />;
+            })}
+      </div>
+   );
 }
