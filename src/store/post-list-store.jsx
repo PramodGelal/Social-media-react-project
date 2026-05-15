@@ -10,6 +10,7 @@ deletePost:()=>{}
 export const PostList = createContext(DEFAULT_CONTEXT);
 
 
+
 const PostListreducer=(currentPostList, action) =>{
     let newPostList=currentPostList;
  if(action.type==="DELETE_POST"){

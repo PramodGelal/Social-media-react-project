@@ -17,7 +17,7 @@ const [selectedTab,setselectedTab]=useState("Home");
     <Sidebar selectedTab={selectedTab} setselectedTab={setselectedTab} ></Sidebar>
   <div className="main-container">
   <Header></Header>
-      {selectedTab === `Home` ? (<PostList></PostList>):(<CreatePost></CreatePost>)}
+          {selectedTab === `Home` ? (<PostList></PostList>) : (<CreatePost setselectedTab={setselectedTab}></CreatePost>)}
   <Footer></Footer>
     </div>
   
