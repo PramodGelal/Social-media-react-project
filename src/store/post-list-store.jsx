@@ -3,7 +3,8 @@ import { createContext, useReducer } from "react";
 const DEFAULT_CONTEXT={
 postList:[],
 addPost:()=>{},
-deletePost:()=>{}
+deletePost:()=>{},
+addPosts:()=>{}
 
 };
 
@@ -21,6 +22,10 @@ const PostListreducer=(currentPostList, action) =>{
     newPostList=[...currentPostList,action.payload]
 
  }
+ else if (action.type === "ADD_POSTS") {
+     newPostList = action.payload.posts;
+
+ }
  else{
     console.log("Choosen type is error ");
  }
@@ -29,7 +34,7 @@ const PostListreducer=(currentPostList, action) =>{
     return newPostList;
 }
 export const PostListProvider = ({ children })=>{
-     const [postList, dispatchPostList] = useReducer(PostListreducer, DEFAULT_POSTLIST);
+     const [postList, dispatchPostList] = useReducer(PostListreducer, []);
     const addPost = (userId, postTitle, postBody, reaction, tags)=>{
          dispatchPostList(
              {
@@ -44,7 +49,16 @@ export const PostListProvider = ({ children })=>{
 
 
                  }
-             })
+             });
+     }
+     const addPosts=(posts)=>{
+        dispatchPostList(
+
+            {
+                type:"ADD_POSTS",
+                payload: {posts}
+            }
+        );
      }
      const deletePost=(postId)=>{
 
@@ -55,7 +69,7 @@ export const PostListProvider = ({ children })=>{
             }
         );
      }
-    return <PostList.Provider value={{postList,addPost,deletePost}}>
+    return <PostList.Provider value={{ postList, addPost, deletePost, addPosts }}>
         {children}
     </PostList.Provider>;
  }
